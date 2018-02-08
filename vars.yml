@@ -2,6 +2,22 @@ director_name: "Tools Director" # Pick a name for your bosh director
 internal_ip: 192.168.50.6 # Director IP address
 internal_gw: 192.168.50.1 # Director Gateway address
 internal_cidr: 192.168.50.0/24 # Director network information
-outbound_network_name: NatNetwork # Don't really get this yet
+internal_dns: 8.8.8.8 # the Address, or addresses of the dns servers you want to use. If using multiple use yaml array syntax: ["1.2.3.4", "1.2.3.5"]
 
-###  Need to check if any of this shit is CPI secific
+# VBOX
+outbound_network_name: NatNetwork # default value, no need to adjust this
+
+###  CPI Specific sections
+
+# VSPHERE 
+## You can find a more detailed description of each field here: https://bosh.io/docs/init-vsphere.html
+network_name: "VM Network" # Name of the switch/dvswitch you'll be connecting the director to
+vcenter_dc: my-dc # Name of the VMWARE Datacenter
+vcenter_ds: datastore0 # Name of the VMWARE Datastore
+vcenter_ip: 192.168.0.10 # VCenter/VSphere's IP Address
+vcenter_user: root # VCenter/VSphere's user name
+vcenter_password: vmware # VCenter/VSphere's user's password
+vcenter_templates: bosh-1-templates # Name of the folder for storing stemcells
+vcenter_vms: bosh-1-vms # Name of the folder for storing bosh VMs
+vcenter_disks: bosh-1-disks # Name of the folder for storing bosh disks
+vcenter_cluster: cluster1 # Name of the VCenter/VSphere cluster

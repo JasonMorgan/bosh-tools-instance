@@ -3,11 +3,15 @@ internal_ip: 192.168.50.6 # Director IP address
 internal_gw: 192.168.50.1 # Director Gateway address
 internal_cidr: 192.168.50.0/24 # Director network information
 internal_dns: 8.8.8.8 # the Address, or addresses of the dns servers you want to use. If using multiple use yaml array syntax: ["1.2.3.4", "1.2.3.5"]
+iaas: vsphere # vsphere | vbox
+bosh_repo_path: ~/workspace/bosh-deployment # Where on your local filesystem you've downloaded the bosh-deployment repository: https://github.com/cloudfoundry/bosh-deployment
+
+
+
+###  CPI Specific sections
 
 # VBOX
 outbound_network_name: NatNetwork # default value, no need to adjust this
-
-###  CPI Specific sections
 
 # VSPHERE 
 ## You can find a more detailed description of each field here: https://bosh.io/docs/init-vsphere.html

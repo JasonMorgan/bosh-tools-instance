@@ -3,23 +3,51 @@
 # Test Dependencies
 
 # Test and echo command, build/destroy
-## Insert a switch statement here
-### Liking the idea of using a var to say create-env or destroy-env
+
+case "$1" in
+        create-env)
+            action="create-env"
+            echo "create-env set, creating a new bosh director"
+            ;;
+        delete-env)
+            echo "delete-env set, deleting the bosh director"
+            action="delete-env"
+            ;;
+        *)
+            echo "No argument found for action, please call this script with either create-env or destroy-env"
+            echo "exiting without taking any action"
+            exit 1
+esac
 
 
-# Test Arguments
-## Check for default vars file
+# [[ -z "$some_cool_var" ]] && echo "no some_cool_var" && exit 1
 
-# Run the bosh env command
+target_type=$(yaml2json < ./vars.yml | jq -r '.iaas|= ascii_downcase | .iaas')
+bosh_repo=$(yaml2json < ./vars.yml | jq -r '.bosh_repo_path')
 
-# Drop the bosh-lite ops files
-# Need to switch on the cpi, maybe add it as a var at the end, if it's an array don't quote it because bash scripting is the worst.
-bosh create-env ~/workspace/bosh-deployment/bosh.yml \
+# Some cpi vars
+# GCP_OPS=""
+# AWS_OPS=""
+# AZURE_OPS=""
+VSPHERE_OPS="-o bosh-deployment/vsphere/cpi.yml"
+VBOX_OPS="-o ~/workspace/bosh-deployment/virtualbox/cpi.yml -o ~/workspace/bosh-deployment/virtualbox/outbound-network.yml -o ~/workspace/bosh-deployment/bosh-lite.yml -o ~/workspace/bosh-deployment/bosh-lite-runc.yml"
+
+if [ "$target_type" = "vsphere" ]; then
+  ops=$VSPHERE_OPS
+fi
+if [ "$target_type" = "vbox" ]; then
+  ops=$VBOX_OPS
+fi 
+
+
+
+
+
+# Use the ops in here
+bosh "$action" "$bosh_repo/bosh.yml" \
   --state ./state.json \
-  -o ~/workspace/bosh-deployment/virtualbox/cpi.yml \
-  -o ~/workspace/bosh-deployment/virtualbox/outbound-network.yml \
-  -o ~/workspace/bosh-deployment/bosh-lite.yml \
-  -o ~/workspace/bosh-deployment/bosh-lite-runc.yml \
+  $ops \
+  -o ~/workspace/bosh-deployment/misc/dns.yml \
   -o ~/workspace/bosh-deployment/jumpbox-user.yml \
   -o ~/workspace/bosh-deployment/uaa.yml \
   -o ~/workspace/bosh-deployment/credhub.yml \

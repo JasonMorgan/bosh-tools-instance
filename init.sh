@@ -5,18 +5,18 @@
 # Test and echo command, build/destroy
 
 case "$1" in
-        create-env)
-            action="create-env"
-            echo "create-env set, creating a new bosh director"
-            ;;
-        delete-env)
-            echo "delete-env set, deleting the bosh director"
-            action="delete-env"
-            ;;
-        *)
-            echo "No argument found for action, please call this script with either create-env or destroy-env"
-            echo "exiting without taking any action"
-            exit 1
+  create-env)
+    action="create-env"
+    echo "create-env set, creating a new bosh director"
+    ;;
+  delete-env)
+    echo "delete-env set, deleting the bosh director"
+    action="delete-env"
+    ;;
+  *)
+    echo "No argument found for action, please call this script with either create-env or destroy-env"
+    echo "exiting without taking any action"
+    exit 1
 esac
 
 

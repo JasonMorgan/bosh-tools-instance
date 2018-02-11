@@ -22,15 +22,15 @@ esac
 
 # [[ -z "$some_cool_var" ]] && echo "no some_cool_var" && exit 1
 
-target_type=$(yaml2json < ./vars.yml | jq -r '.iaas|= ascii_downcase | .iaas')
-bosh_repo=$(yaml2json < ./vars.yml | jq -r '.bosh_repo_path')
+target_type=$(yaml2json < ./vars.local.yml | jq -r '.iaas|= ascii_downcase | .iaas')
+bosh_repo=$(yaml2json < ./vars.local.yml | jq -r '.bosh_repo_path')
 
 # Some cpi vars
 # GCP_OPS=""
 # AWS_OPS=""
 # AZURE_OPS=""
-VSPHERE_OPS="-o bosh-deployment/vsphere/cpi.yml"
-VBOX_OPS="-o ~/workspace/bosh-deployment/virtualbox/cpi.yml -o ~/workspace/bosh-deployment/virtualbox/outbound-network.yml -o ~/workspace/bosh-deployment/bosh-lite.yml -o ~/workspace/bosh-deployment/bosh-lite-runc.yml"
+VSPHERE_OPS="-o $bosh_repo/vsphere/cpi.yml"
+VBOX_OPS="-o $bosh_repo/virtualbox/cpi.yml -o $bosh_repo/virtualbox/outbound-network.yml -o $bosh_repo/bosh-lite.yml -o $bosh_repo/bosh-lite-runc.yml"
 
 if [ "$target_type" = "vsphere" ]; then
   ops=$VSPHERE_OPS
@@ -47,9 +47,9 @@ fi
 bosh "$action" "$bosh_repo/bosh.yml" \
   --state ./state.json \
   $ops \
-  -o ~/workspace/bosh-deployment/misc/dns.yml \
-  -o ~/workspace/bosh-deployment/jumpbox-user.yml \
-  -o ~/workspace/bosh-deployment/uaa.yml \
-  -o ~/workspace/bosh-deployment/credhub.yml \
+  -o $bosh_repo/misc/dns.yml \
+  -o $bosh_repo/jumpbox-user.yml \
+  -o $bosh_repo/uaa.yml \
+  -o $bosh_repo/credhub.yml \
   --vars-store ./creds.yml \
-  --vars-file vars.yml
+  --vars-file vars.local.yml

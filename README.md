@@ -19,7 +19,29 @@
 
 ## Walkthrough
 
-## TL;DR
+* Navigate into this repo
+  * `cd path-to-this-repo/bosh-tools-instance`
+* Copy the vars.yml file into a file called vars.local.yml
+  * `cat vars.yml > vars.local.yml`
+* Update the information in the repo to match your actual environment
+  * The fields in the vars file all have descriptions that should allow you to understand what information is required
+* run the init script with the appropriate argument
+  * create-env if you want a new director
+  * delete-env if you want to destroy a director
+
+```bash
+chmod +x init.sh
+./init.sh create-env
+```
+
+or
+
+```bash
+chmod +x init.sh
+./init.sh delete-env
+```
+
+obviously you'll only need to do the chmod operation once.
 
 ## TODO
 

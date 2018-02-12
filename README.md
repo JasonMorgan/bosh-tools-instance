@@ -2,10 +2,11 @@
 
 ## Requirements
 
-* Bosh repo
-  * The path is set in the [vars.yml](vars.yml) file to "~/workspace/bosh-deployment", you can change it by modifying that string
+* [Bosh repo](https://github.com/cloudfoundry/bosh-deployment)
+  * The path is set in the vars.yml file to "~/workspace/bosh-deployment", you can change it by modifying that string
 * [Vars File](vars.yml)
   * Be sure you update the values as is appropriate for your environment
+  * The script will only use a modified version called vars.local.yml that will be ignored by this repo by default
 * tools
   * yaml2json
   * jq

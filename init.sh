@@ -19,7 +19,6 @@ case "$1" in
     exit 1
 esac
 
-
 # [[ -z "$some_cool_var" ]] && echo "no some_cool_var" && exit 1
 
 target_type=$(yaml2json < ./vars.local.yml | jq -r '.iaas|= ascii_downcase | .iaas')
@@ -38,10 +37,6 @@ fi
 if [ "$target_type" = "vbox" ]; then
   ops=$VBOX_OPS
 fi 
-
-
-
-
 
 # Use the ops in here
 bosh "$action" "$bosh_repo/bosh.yml" \

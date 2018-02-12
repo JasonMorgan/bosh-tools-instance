@@ -43,6 +43,28 @@ chmod +x init.sh
 
 obviously you'll only need to do the chmod operation once.
 
+### Connecting to the director
+
+* Set some vars
+
+```bash
+export my_director_ip=$(yaml2json < ./vars.local.yml | jq -r '.internal_ip')
+export BOSH_CLIENT=admin
+export BOSH_CLIENT_SECRET=`bosh int ./creds.yml --path /admin_password`
+```
+
+* Test your connection:
+
+`bosh environment -e $my_director_ip --ca-cert <(bosh int ./creds.yml --path /director_ssl/ca)`
+
+* Alias the environment
+
+`bosh alias-env bt -e $my_director_ip --ca-cert <(bosh int ./creds.yml --path /director_ssl/ca)`
+
+* Optional: Make a simple alias for bosh
+
+`alias bt='bosh -e bt'`
+
 ## TODO
 
 * Support other IaaS offerings, currently only written with VSphere in mind and with vbox as a practice run

@@ -30,6 +30,7 @@ bosh_repo=$(yaml2json < ./vars.local.yml | jq -r '.bosh_repo_path')
 # AZURE_OPS=""
 VSPHERE_OPS="-o $bosh_repo/vsphere/cpi.yml"
 VBOX_OPS="-o $bosh_repo/virtualbox/cpi.yml -o $bosh_repo/virtualbox/outbound-network.yml -o $bosh_repo/bosh-lite.yml -o $bosh_repo/bosh-lite-runc.yml"
+AWS_OPS="-o $bosh_repo/aws/cpi.yml"
 
 case "$target_type" in
   vsphere)
@@ -37,6 +38,9 @@ case "$target_type" in
     ;;
   vbox)
     ops=$VBOX_OPS
+    ;;
+  aws)
+    ops=$AWS_OPS
     ;;
   *)
     echo "target type: $target_type, is not supported."

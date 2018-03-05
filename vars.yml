@@ -25,3 +25,15 @@ vcenter_templates: bosh-1-templates # Name of the folder for storing stemcells
 vcenter_vms: bosh-1-vms # Name of the folder for storing bosh VMs
 vcenter_disks: bosh-1-disks # Name of the folder for storing bosh disks
 vcenter_cluster: cluster1 # Name of the VCenter/VSphere cluster
+
+# AWS
+## You can find a more detailed description of each field here: https://bosh.io/docs/init-aws.html
+
+access_key_id: AKI...
+secret_access_key: wfh28...
+region: us-east-1
+az: us-east-1a
+default_key_name: bosh
+default_security_groups: [bosh]
+private_key: ~/Downloads/bosh.pem
+subnet_id: subnet-ait8g34t
